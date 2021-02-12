@@ -18,11 +18,15 @@ class ParallelTests::RSpec::LoggerBase < RSpec::Core::Formatters::BaseTextFormat
     when String # a path ?
       FileUtils.mkdir_p(File.dirname(@output))
       File.open(@output, 'w') {} # overwrite previous results
-      @output = File.open(@output, 'a')
+      @output = File.open(output_path_for_process(@output), 'a')
     when File # close and restart in append mode
       @output.close
-      @output = File.open(@output.path, 'a')
+      @output = File.open(output_path_for_process(@output.path), 'a')
     end
+  end
+
+  def output_path_for_process(path)
+    path.sub(".log", "-#{ENV['TEST_ENV_NUMBER']}.log")
   end
 
   # stolen from Rspec
