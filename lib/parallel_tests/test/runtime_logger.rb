@@ -66,7 +66,9 @@ module ParallelTests
         end
 
         def logfile
-          ParallelTests::Test::Runner.runtime_log
+          ParallelTests::Test::Runner.runtime_log.sub(/\.log$/, "_#{ENV['TEST_ENV_NUMBER']}.log").tap do |filename|
+            p [:runtime_log_filename, filename]
+          end
         end
       end
     end

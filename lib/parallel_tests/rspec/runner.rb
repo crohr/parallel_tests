@@ -23,6 +23,7 @@ module ParallelTests
         end
 
         def runtime_log
+          p [:should_not_be_called]
           "tmp/parallel_runtime_rspec.log"
         end
 
